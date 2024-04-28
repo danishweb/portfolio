@@ -12,9 +12,6 @@ export interface IDesktop {
   isDesktop: boolean;
 }
 
-export const NO_MOTION_PREFERENCE_QUERY =
-  "(prefers-reduced-motion: no-preference)";
-
 export default function Home() {
   const isDesktop = useIsDesktop();
 

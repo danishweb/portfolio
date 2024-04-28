@@ -1,8 +1,7 @@
 import { Linear, gsap } from "gsap";
 import Image from "next/image";
 import React, { MutableRefObject, useEffect, useRef } from "react";
-import Typed from "typed.js";
-import { MENULINKS, SOCIAL_LINKS, TYPED_STRINGS } from "../../constants";
+import { MENULINKS } from "../../constants";
 import Button, { ButtonTypes } from "../common/button";
 
 const HERO_STYLES = {
