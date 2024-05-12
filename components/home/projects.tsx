@@ -26,7 +26,7 @@ const ProjectsSection = ({ isDesktop }: IDesktop) => {
     const revealTl = gsap.timeline({ defaults: { ease: Linear.easeNone } });
     revealTl.from(
       targetSectionRef.current.querySelectorAll(".seq"),
-      { opacity: 0, duration: 0.5, stagger: 0.5 },
+      { opacity: 0, duration: 0.5, stagger: 0.5, display: "none" },
       "<"
     );
 
