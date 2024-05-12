@@ -50,5 +50,5 @@ body {
 }
 
 .section-title-sm {
-  @apply uppercase tracking-widest text-gray-200 text-sm;
+  @apply uppercase tracking-widest text-black text-sm;
 }

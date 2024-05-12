@@ -110,7 +110,8 @@ export const SKILLS = {
     "svg",
     "html",
     "css",
+    "bootstrap",
   ],
-  userInterface: ["figma", "sketch", "illustrator", "photoshop"],
+  backend: ["nodejs", "serveless", "mongodb", "mssqlserver"],
   other: ["git", "webpack"],
 };

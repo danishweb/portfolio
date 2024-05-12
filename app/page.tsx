@@ -6,6 +6,7 @@ import AboutSection from "@/components/home/about";
 import Footer from "@/components/home/footer";
 import HeroSection from "@/components/home/hero-section";
 import ProjectsSection from "@/components/home/projects";
+import SkillsSection from "@/components/home/skills";
 import useIsDesktop from "@/utils/hooks/use-is-desktop";
 
 export interface IDesktop {
@@ -28,6 +29,7 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <ProjectsSection isDesktop={isDesktop} />
+        <SkillsSection />
         <Footer />
       </main>
     </div>
