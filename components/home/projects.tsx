@@ -1,9 +1,12 @@
-import { IDesktop } from "app/page";
+"use client";
+
 import { Linear, gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
-import { MENULINKS, PROJECTS } from "../../constants";
+import { MENULINKS } from "../../constants";
 import ProjectTile from "../common/project-tile";
+import useIsDesktop from "@/utils/hooks/use-is-desktop";
+import { ProjectsSection as ProjectsSectionType } from "@/types";
 
 const PROJECT_STYLES = {
   SECTION:
@@ -12,12 +15,17 @@ const PROJECT_STYLES = {
     "tall:mt-12 mt-6 grid grid-flow-col auto-cols-max md:gap-10 gap-6 project-wrapper w-fit seq snap-x scroll-pl-6 snap-mandatory",
 };
 
-const ProjectsSection = ({ isDesktop }: IDesktop) => {
+interface ProjectsSectionProps {
+  data: ProjectsSectionType;
+}
+
+const ProjectsSection = ({ data }: ProjectsSectionProps) => {
+  const isDesktop = useIsDesktop();
   const targetSectionRef: MutableRefObject<HTMLDivElement> = useRef(null);
   const sectionTitleElementRef: MutableRefObject<HTMLDivElement> = useRef(null);
 
-  const [willChange, setwillChange] = useState(false);
-  const [horizontalAnimationEnabled, sethorizontalAnimationEnabled] =
+  const [willChange, setWillChange] = useState(false);
+  const [horizontalAnimationEnabled, setHorizontalAnimationEnabled] =
     useState(false);
 
   const initRevealAnimation = (
@@ -67,7 +75,7 @@ const ProjectsSection = ({ isDesktop }: IDesktop) => {
       pin: true,
       animation: timeline,
       pinSpacing: "margin",
-      onToggle: (self) => setwillChange(self.isActive),
+      onToggle: (self) => setWillChange(self.isActive),
     });
 
     return [timeline, scrollTrigger];
@@ -81,7 +89,7 @@ const ProjectsSection = ({ isDesktop }: IDesktop) => {
       "(prefers-reduced-motion: no-preference)"
     );
 
-    sethorizontalAnimationEnabled(isDesktop && matches);
+    setHorizontalAnimationEnabled(isDesktop && matches);
 
     if (isDesktop && matches) {
       [projectsTimeline, projectsScrollTrigger] = initProjectsAnimation(
@@ -119,22 +127,21 @@ const ProjectsSection = ({ isDesktop }: IDesktop) => {
 
   const renderSectionTitle = (): React.ReactNode => (
     <div
-      className={`flex flex-col inner-container  ${
+      className={`flex flex-col inner-container ${
         willChange ? "will-change-transform" : ""
       }`}
       ref={sectionTitleElementRef}
     >
       <p className="section-title-sm seq">PROJECTS</p>
-      <h1 className="section-heading seq mt-2">My Works</h1>
+      <h1 className="section-heading seq mt-2">{data.title}</h1>
       <h2 className="text-2xl md:max-w-3xl w-full seq max-w-sm mt-2">
-        I have contributed in many projects ranging from Frontend development,
-        UI/UX design, and Open Source
+        {data.description}
       </h2>
     </div>
   );
 
   const renderProjectTiles = (): React.ReactNode =>
-    PROJECTS.map((project) => (
+    data.projects.map((project) => (
       <ProjectTile
         project={project}
         key={project.name}
@@ -149,6 +156,10 @@ const ProjectsSection = ({ isDesktop }: IDesktop) => {
       ref={targetSectionRef}
       className={`${isDesktop && "min-h-screen"} ${PROJECT_STYLES.SECTION}`}
       id={projectsSectionRef}
+      style={{
+        backgroundColor: data.sectionStyles?.backgroundColor,
+        color: data.sectionStyles?.textColor,
+      }}
     >
       {renderSectionTitle()}
       <div className={PROJECT_STYLES.PROJECTS_WRAPPER}>

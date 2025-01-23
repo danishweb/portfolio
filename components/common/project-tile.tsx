@@ -1,51 +1,52 @@
-import styles from "./project-tile.module.css";
+"use client";
+
+import { Project } from "@/types";
 import Image from "next/image";
 import React, { MutableRefObject, useEffect, useRef } from "react";
 import VanillaTilt from "vanilla-tilt";
-import { IProject } from "../../constants";
+import styles from "./project-tile.module.css";
+import { urlForImage } from "@/sanity/lib/image";
 
-const ProjectTile = ({
-  project,
-  animationEnabled,
-}: {
-  project: IProject;
+interface ProjectTileProps {
+  project: Project;
   animationEnabled: boolean;
-}) => {
+}
+
+const ProjectTile = ({ project, animationEnabled }: ProjectTileProps) => {
   const projectCard: MutableRefObject<HTMLDivElement> = useRef(null);
-  const {
-    name,
-    tech,
-    image,
-    blurImage,
-    description,
-    gradient: [stop1, stop2],
-  } = project;
+  const { name, tech, image, description, gradient } = project;
+  const [stop1, stop2] = gradient || ["#000000", "#000000"];
 
   useEffect(() => {
-    VanillaTilt.init(projectCard.current, {
-      max: 5,
-      speed: 400,
-      glare: true,
-      "max-glare": 0.2,
-      gyroscope: false,
-    });
+    if (projectCard.current) {
+      VanillaTilt.init(projectCard.current, {
+        max: 5,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.2,
+        gyroscope: false,
+      });
+    }
   }, [projectCard]);
 
-  const renderTechIcons = (techStack: string[]): React.ReactNode => (
+  if (!project) return null;
+
+  const renderTechIcons = (techStack: Project["tech"]): React.ReactNode => (
     <div
-      className={`
-      ${styles.techIcons} w-1/2 h-full absolute left-24 top-0 sm:flex items-center hidden
-    `}
+      className={`${styles.techIcons} w-1/2 h-full absolute left-24 top-0 sm:flex items-center hidden`}
     >
       <div className="flex flex-col pb-8">
-        {techStack.map((tech, i) => (
-          <div className={`${i % 2 === 0 && "ml-16"} mb-4`} key={tech}>
+        {techStack?.map((tech, i) => (
+          <div
+            className={`${i % 2 === 0 && "ml-16"} mb-4`}
+            key={tech.slug}
+          >
             <Image
-              src={`/skills/${tech}.svg`}
-              alt={tech}
-              height={45}
-              objectFit="contain"
+              src={tech.icon}
+              alt={tech.name}
               width={45}
+              height={45}
+              style={{ objectFit: "contain" }}
             />
           </div>
         ))}
@@ -88,17 +89,11 @@ const ProjectTile = ({
     </>
   );
 
-  const renderProjectImage = (
-    image: string,
-    blurImage: string,
-    name: string
-  ): React.ReactNode => (
+  const renderProjectImage = (image: any, name: string): React.ReactNode => (
     <Image
-      placeholder="blur"
-      blurDataURL={blurImage}
-      src={image}
+      src={urlForImage(image)}
       alt={name}
-      layout="fill"
+      fill
       className={`${styles.ProjectImg} z-0`}
     />
   );
@@ -119,9 +114,7 @@ const ProjectTile = ({
     >
       <div
         ref={projectCard}
-        className={`
-          ${styles.ProjectTile}
-           rounded-3xl relative p-6 flex-col flex justify-between max-w-full`}
+        className={`${styles.ProjectTile} rounded-3xl relative p-6 flex-col flex justify-between max-w-full`}
         style={{
           background: `linear-gradient(90deg, ${stop1} 0%, ${stop2} 100%)`,
         }}
@@ -129,10 +122,10 @@ const ProjectTile = ({
         <Image
           src="/project-bg.svg"
           alt="Project"
-          layout="fill"
+          fill
           className="absolute w-full h-full top-0 left-0 opacity-20"
         />
-        {renderProjectImage(image, blurImage, name)}
+        {renderProjectImage(image, name)}
         {renderTopBottomGradient(stop1)}
         {renderProjectName(name)}
         {renderTechIcons(tech)}

@@ -6,6 +6,30 @@
   transform: perspective(1000px);
 }
 
+.ProjectTile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: transparent;
+  opacity: 0.4;
+}
+
+.ProjectTile::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: inherit;
+  filter: blur(10px);
+  transform: translateZ(-1px);
+  margin: 0 -20px;
+  z-index: -1;
+}
+
 .ProjectTile img {
   object-fit: cover;
 }
@@ -28,8 +52,13 @@
   left: unset !important;
   right: 2rem !important;
   bottom: unset !important;
+  top: unset !important;
+  left: unset !important;
+  right: 2rem !important;
+  bottom: unset !important;
 }
 
 .techIcons {
   transform: rotate(-22.5deg) translateZ(2rem);
+  transform: translateZ(2rem);
 }

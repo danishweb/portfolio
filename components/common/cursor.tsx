@@ -1,6 +1,7 @@
+"use client";
 
+import useIsDesktop from "@/utils/hooks/use-is-desktop";
 import { isSmallScreen } from "@/utils/index";
-import { IDesktop } from "app/page";
 import { Linear, gsap } from "gsap";
 import { useEffect, useRef } from "react";
 
@@ -11,7 +12,8 @@ const CURSOR_STYLES = {
     "fixed hidden h-8 w-8 select-none pointer-events-none z-50 rounded-full -left-3 -top-3 ring-1 ring-black will-change-transform",
 };
 
-const Cursor = ({ isDesktop }: IDesktop) => {
+const Cursor = () => {
+  const isDesktop = useIsDesktop();
   const cursor = useRef<HTMLDivElement>(null);
   const follower = useRef<HTMLDivElement>(null);
 
@@ -74,10 +76,7 @@ const Cursor = ({ isDesktop }: IDesktop) => {
   return (
     <>
       <div ref={cursor} className={CURSOR_STYLES.CURSOR}></div>
-      <div
-        ref={follower}
-        className={CURSOR_STYLES.FOLLOWER}
-      ></div>
+      <div ref={follower} className={CURSOR_STYLES.FOLLOWER}></div>
 
       <div className="rounded-t-lg"></div>
     </>

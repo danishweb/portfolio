@@ -1,8 +1,12 @@
+"use client";
+
 import { Linear, gsap } from "gsap";
 import Image from "next/image";
 import React, { MutableRefObject, useEffect, useRef } from "react";
 import { MENULINKS } from "../../constants";
 import Button, { ButtonTypes } from "../common/button";
+import { HeroSection as HeroSectionType } from "@/types/index";
+import { urlForImage } from "@/sanity/lib/image";
 
 const HERO_STYLES = {
   SECTION:
@@ -14,7 +18,11 @@ const HERO_STYLES = {
   TYPED_SPAN: "text-xl sm:text-2xl md:text-4xl seq",
 };
 
-const HeroSection = React.memo(() => {
+interface HeroSectionProps {
+  data: HeroSectionType;
+}
+
+const HeroSection = React.memo(({ data }: HeroSectionProps) => {
   const targetSection: MutableRefObject<HTMLDivElement> = useRef(null);
   const scrambledText: MutableRefObject<HTMLHeadingElement> = useRef(null);
 
@@ -40,55 +48,58 @@ const HeroSection = React.memo(() => {
   const renderHeroContent = (): React.ReactNode => (
     <div className={HERO_STYLES.CONTENT}>
       <div className="mb-5 lg:mb-10 flex items-center justify-center flex-col gap-5">
-        <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-blue-100 overflow-auto relative">
-          <Image
-            src={`/bitmoji.png`}
-            alt={"avatar"}
-            objectFit="contain"
-            fill
-            className="w-full h-full absolute"
-          />
+        <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-blue-100 overflow-hidden relative">
+          {data.profileImage && (
+            <Image
+              src={urlForImage(data.profileImage)}
+              alt="Profile"
+              fill
+              sizes="(max-width: 768px) 128px, 192px"
+              priority
+              className="object-cover"
+            />
+          )}
         </div>
-        <h2 className="seq text-2xl">Hi, I&apos;m Danish 🤘</h2>
+        <h2 className="seq text-2xl">{data.greeting}</h2>
       </div>
 
       <h1
         className="text-4xl md:text-5xl lg:text-6xl md:max-w-[60%] text-center mb-5 lg:mb-10 font-medium"
         ref={scrambledText}
       >
-        <span className="underline-custom">Building</span> digital products,
-        brands, and experience.
+        <span className="underline-custom">
+          {data.mainHeading.highlightedText}
+        </span>{" "}
+        {data.mainHeading.remainingText}
       </h1>
 
       <div className="mb-5 lg:mb-10 text-center">
         <p>
-          A <strong>Software Developer</strong> in AsIndia Innovations.
+          A <strong>{data.introduction.role}</strong> in{" "}
+          {data.introduction.company}.
         </p>
 
-        <p>I specialize in pixels to code and everything in between 😉.</p>
+        <p>{data.introduction.tagline}</p>
       </div>
 
       <div className="flex seq">
-        <Button
-          classes="mr-3 uppercase"
-          type={ButtonTypes.OUTLINE}
-          name="Resume"
-          otherProps={{
-            target: "_blank",
-            rel: "noreferrer",
-          }}
-          href="/DanishCV .pdf"
-        ></Button>
-        <Button
-          classes="ml-3 uppercase"
-          type={ButtonTypes.PRIMARY}
-          name="Let's Talk"
-          href="mailto:danishshaikh5121@gmail.com"
-          otherProps={{
-            target: "_blank",
-            rel: "noreferrer",
-          }}
-        ></Button>
+        {data.ctaButtons?.map((button, index) => (
+          <Button
+            key={button.text}
+            classes={`${index === 0 ? "mr-3" : "ml-3"} uppercase`}
+            type={
+              button.type === "PRIMARY"
+                ? ButtonTypes.PRIMARY
+                : ButtonTypes.OUTLINE
+            }
+            name={button.text}
+            href={button.url}
+            otherProps={{
+              target: button.newTab ? "_blank" : "_self",
+              rel: button.newTab ? "noreferrer" : undefined,
+            }}
+          />
+        ))}
       </div>
     </div>
   );
@@ -100,7 +111,11 @@ const HeroSection = React.memo(() => {
       className={HERO_STYLES.SECTION}
       id={heroSectionRef}
       ref={targetSection}
-      style={{ opacity: 0 }}
+      style={{
+        opacity: 0,
+        backgroundColor: data.sectionStyles?.backgroundColor,
+        color: data.sectionStyles?.textColor,
+      }}
     >
       {renderHeroContent()}
     </section>

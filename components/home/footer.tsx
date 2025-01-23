@@ -1,5 +1,7 @@
-import { EMAIL, MENULINKS, SOCIAL_LINKS } from "../../constants";
+"use client";
+
 import Image from "next/image";
+import { MENULINKS, SOCIAL_LINKS } from "../../constants";
 import Button, { ButtonTypes } from "../common/button";
 
 const Footer = () => {
