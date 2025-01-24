@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "echo 'Building Sanity to public/studio'; cd studio; yarn; npx @sanity/cli build ../public/studio -y; echo 'Done'",
     "build": "next build",
     "start": "next start",
     "sanity": "cd studio; sanity start",
@@ -22,7 +21,7 @@
     "react": "^18",
     "react-dom": "^18",
     "sanity": "^3.71.2",
-    "styled-components": "^6.1.14",
+    "styled-components": "6.1.14",
     "typed.js": "^2.0.12",
     "vanilla-tilt": "^1.8.1"
   },
@@ -30,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
     "postcss": "^8",
