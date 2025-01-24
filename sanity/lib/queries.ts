@@ -79,10 +79,13 @@ export const skillsSectionQuery = groq`
   description,
   skillCategories[] {
     category,
-    "skills": skills[]-> {
+    skills[]-> {
       name,
       "slug": slug.current,
-      "icon": icon.asset->url
+      icon {
+        asset->,
+        hotspot
+      }
     }
   },
   sectionStyles {
@@ -98,12 +101,18 @@ export const footerSectionQuery = groq`
   socialLinks[] {
     platform,
     url,
-    icon
+    "icon": {
+      "asset": {
+        "url": icon.asset->url
+      }
+    }
   },
   contactEmail,
-  quickLinks[] {
+  ctaButtons[] {
     text,
-    url
+    url,
+    type,
+    newTab
   }
 }`;
 
@@ -180,10 +189,13 @@ export const allSectionsQuery = groq`{
     description,
     skillCategories[] {
       category,
-      "skills": skills[]-> {
+      skills[]-> {
         name,
         "slug": slug.current,
-        "icon": icon.asset->url
+        icon {
+          asset->,
+          hotspot
+        }
       }
     },
     sectionStyles {
@@ -197,12 +209,18 @@ export const allSectionsQuery = groq`{
     socialLinks[] {
       platform,
       url,
-      icon
+      "icon": {
+        "asset": {
+          "url": icon.asset->url
+        }
+      }
     },
     contactEmail,
-    quickLinks[] {
+    ctaButtons[] {
       text,
-      url
+      url,
+      type,
+      newTab
     }
   }
 }`;

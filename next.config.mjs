@@ -5,9 +5,12 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "cdn.sanity.io",
-        port: "",
+        pathname: "**",
       },
     ],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 };
 

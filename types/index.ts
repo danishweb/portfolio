@@ -45,7 +45,7 @@ export interface AboutSection {
 export interface TechStack {
   name: string;
   slug: string;
-  icon: string;
+  icon: Image;
 }
 
 // Skills Section Types
@@ -89,19 +89,29 @@ export interface ProjectsSection {
 }
 
 // Footer Section Types
+export interface SocialLink {
+  platform: string;
+  url: string;
+  icon: {
+    asset: {
+      url: string;
+    };
+  };
+}
+
+export interface CTAButton {
+  text: string;
+  url: string;
+  type: "PRIMARY" | "OUTLINE" | "WHITE";
+  newTab: boolean;
+}
+
 export interface FooterSection {
   _type: "footerSection";
-  copyright?: string;
-  socialLinks: {
-    platform: string;
-    url: string;
-    icon: string;
-  }[];
+  copyright: string;
+  socialLinks: SocialLink[];
   contactEmail?: string;
-  quickLinks: {
-    text: string;
-    url: string;
-  }[];
+  ctaButtons: CTAButton[];
 }
 
 // Combined Platform Data Type

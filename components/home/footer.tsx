@@ -1,69 +1,96 @@
 "use client";
 
 import Image from "next/image";
-import { MENULINKS, SOCIAL_LINKS } from "../../constants";
+import { MENULINKS } from "../../constants";
 import Button, { ButtonTypes } from "../common/button";
+import { CTAButton, FooterSection } from "@/types";
 
-const Footer = () => {
+interface FooterProps {
+  data: FooterSection;
+}
+
+const Footer = ({ data }: FooterProps) => {
+  console.log(data)
+  const getButtonType = (type: CTAButton["type"]): ButtonTypes => {
+    switch (type) {
+      case "PRIMARY":
+        return ButtonTypes.PRIMARY;
+      case "OUTLINE":
+        return ButtonTypes.OUTLINE;
+      case "WHITE":
+        return ButtonTypes.WHITE;
+      default:
+        return ButtonTypes.OUTLINE;
+    }
+  };
+
   const renderSocialIcons = (): React.ReactNode => {
-    return Object.keys(SOCIAL_LINKS).map((el: keyof typeof SOCIAL_LINKS) => (
+    return data.socialLinks.map((social) => (
       <a
-        href={SOCIAL_LINKS[el]}
-        key={el}
+        href={social.url}
+        key={social.platform}
         className="link hover:opacity-80 duration-300 md:px-2 px-1"
         rel="noreferrer"
         target="_blank"
       >
-        <Image src={`/social/${el}.svg`} alt={el} width={40} height={40} />
+        <Image
+          src={social.icon.asset.url}
+          alt={social.platform}
+          width={40}
+          height={40}
+        />
       </a>
     ));
   };
+
+  const renderButtons = (): React.ReactNode => (
+    <div className="flex flex-wrap justify-center mt-8 gap-6">
+      {data.ctaButtons.map((button) => (
+        <Button
+          key={button.text}
+          type={getButtonType(button.type)}
+          name={button.text}
+          otherProps={{
+            target: button.newTab ? "_blank" : undefined,
+            rel: button.newTab ? "noreferrer" : undefined,
+          }}
+          href={button.url}
+        />
+      ))}
+      {data.contactEmail && (
+        <Button
+          type={ButtonTypes.WHITE}
+          name="Let's Talk"
+          href={`mailto:${data.contactEmail}`}
+          otherProps={{
+            target: "_blank",
+            rel: "noreferrer",
+          }}
+        />
+      )}
+    </div>
+  );
 
   const renderFooterContent = (): React.ReactNode => (
     <>
       <h1 className="font-medium text-3xl md:text-4xl text-center">
         Connect with me on social media.
       </h1>
-      <div className="flex mt-8">{renderSocialIcons()}</div>
-      <div className="flex mt-8">
-        <Button
-          classes="mr-3"
-          type={ButtonTypes.OUTLINE}
-          name="Resume"
-          otherProps={{
-            target: "_blank",
-            rel: "noreferrer",
-          }}
-          href="/DanishCV .pdf"
-        ></Button>
-        <Button
-          classes="ml-3"
-          type={ButtonTypes.WHITE}
-          name="Let's Talk"
-          href={"mailto:danishshaikh5121@gmail.com"}
-          otherProps={{
-            target: "_blank",
-            rel: "noreferrer",
-          }}
-        ></Button>
-      </div>
+      <div className="flex justify-center mt-8">{renderSocialIcons()}</div>
+      {renderButtons()}
       <h2 className="text-center text-sm sm:text-base mt-8">
-        Designed and Developed with ❤️ by Danish
+        {data.copyright}
       </h2>
     </>
   );
 
-  const { ref: footerRef } = MENULINKS[4];
-
   return (
     <footer
-      className="w-full relative select-none bg-cover flex flex-col items-stretch"
-      id={footerRef}
+      className="w-full relative select-none bg-gray pt-12 pb-6 px-6"
+      id={MENULINKS[4].ref}
     >
-      <div className="h-full w-full">
-        <div className="section-container flex-col flex h-full justify-end z-10 items-center py-12">
-          {renderFooterContent()}
-        </div>
+      <div className="section-container flex flex-col justify-center">
+        {renderFooterContent()}
       </div>
     </footer>
   );

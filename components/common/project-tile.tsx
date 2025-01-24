@@ -37,12 +37,9 @@ const ProjectTile = ({ project, animationEnabled }: ProjectTileProps) => {
     >
       <div className="flex flex-col pb-8">
         {techStack?.map((tech, i) => (
-          <div
-            className={`${i % 2 === 0 && "ml-16"} mb-4`}
-            key={tech.slug}
-          >
+          <div className={`${i % 2 === 0 && "ml-16"} mb-4`} key={tech.slug}>
             <Image
-              src={tech.icon}
+              src={urlForImage(tech.icon)}
               alt={tech.name}
               width={45}
               height={45}

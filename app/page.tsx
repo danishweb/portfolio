@@ -23,8 +23,8 @@ export default async function Home() {
         <HeroSection data={data.hero} />
         <AboutSection data={data.about} />
         <ProjectsSection data={data.projects} />
-        <SkillsSection />
-        <Footer />
+        <SkillsSection data={data.skills} />
+        <Footer data={data.footer} />
       </main>
     </div>
   );

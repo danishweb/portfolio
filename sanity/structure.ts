@@ -1,5 +1,6 @@
-import type { StructureResolver } from "sanity/structure";
-
+// @ts-ignore
+import {type StructureResolver} from 'sanity/structure'
+// @ts-ignore
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("Content")

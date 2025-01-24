@@ -6,6 +6,7 @@
 
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
+// @ts-ignore
 import { structureTool } from "sanity/structure";
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works

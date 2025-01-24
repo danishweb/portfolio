@@ -1,8 +1,16 @@
-import { MENULINKS, SKILLS } from "../../constants";
-import Image from "next/image";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+"use client";
+
+import { urlForImage } from "@/sanity/lib/image";
+import { SkillsSection as SkillsSectionT, TechStack } from "@/types";
 import { gsap, Linear } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import Image from "next/image";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { MENULINKS } from "../../constants";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const SKILL_STYLES = {
   SECTION:
@@ -10,22 +18,32 @@ const SKILL_STYLES = {
   SKILL_TITLE: "section-title-sm mb-4 seq",
 };
 
-const SkillsSection = () => {
+const SkillsSection = ({ data }: { data: SkillsSectionT }) => {
   const targetSection: MutableRefObject<HTMLDivElement> = useRef(null);
   const [willChange, setwillChange] = useState(false);
 
   const initRevealAnimation = (
     targetSection: MutableRefObject<HTMLDivElement>
-  ): ScrollTrigger => {
+  ): ScrollTrigger | undefined => {
+    if (!targetSection.current) return;
+
     const revealTl = gsap.timeline({ defaults: { ease: Linear.easeNone } });
+    const sequenceElements = targetSection.current.querySelectorAll(".seq");
+
+    if (!sequenceElements.length) return;
+
     revealTl.from(
-      targetSection.current.querySelectorAll(".seq"),
+      sequenceElements,
       { opacity: 1, duration: 0.5, stagger: 0.5 },
       "<"
     );
 
+    const skillsWrapper =
+      targetSection.current.querySelector(".skills-wrapper");
+    if (!skillsWrapper) return;
+
     return ScrollTrigger.create({
-      trigger: targetSection.current.querySelector(".skills-wrapper"),
+      trigger: skillsWrapper,
       start: "100px bottom",
       end: `center center`,
       animation: revealTl,
@@ -37,16 +55,17 @@ const SkillsSection = () => {
   useEffect(() => {
     const revealAnimationRef = initRevealAnimation(targetSection);
 
-    return revealAnimationRef.kill;
+    return () => {
+      revealAnimationRef?.kill();
+    };
   }, [targetSection]);
 
   const renderSectionTitle = (): React.ReactNode => (
     <div className="flex flex-col">
       <p className="section-title-sm seq">SKILLS</p>
-      <h1 className="section-heading seq mt-2">My Skills</h1>
+      <h1 className="section-heading seq mt-2">{data.title}</h1>
       <h2 className="text-2xl md:max-w-2xl w-full seq mt-2">
-        I like to take responsibility to craft aesthetic webapps using modern
-        architecture.{" "}
+        {data.description}
       </h2>
     </div>
   );
@@ -75,11 +94,11 @@ const SkillsSection = () => {
   );
 
   const renderSkillColumn = (
-    title: string,
-    skills: string[]
+    category: string,
+    skills: TechStack[]
   ): React.ReactNode => (
     <>
-      <h3 className={SKILL_STYLES.SKILL_TITLE}>{title}</h3>
+      <h3 className={SKILL_STYLES.SKILL_TITLE}>{category}</h3>
       <div
         className={`flex flex-wrap seq ${
           willChange ? "will-change-opacity" : ""
@@ -87,11 +106,12 @@ const SkillsSection = () => {
       >
         {skills.map((skill) => (
           <Image
-            key={skill}
-            src={`/skills/${skill}.svg`}
-            alt={skill}
+            key={skill.name}
+            src={urlForImage(skill.icon)}
+            alt={skill.name}
             width={76}
             height={76}
+            priority
             className="skill mx-2"
           />
         ))}
@@ -99,8 +119,31 @@ const SkillsSection = () => {
     </>
   );
 
+  if (!data?.skillCategories?.length) {
+    return null;
+  }
+
+  // Map categories to match the static structure
+  const frontendCategory = data.skillCategories.find((cat) =>
+    cat.category.toLowerCase().includes("frontend")
+  );
+  const backendCategory = data.skillCategories.find((cat) =>
+    cat.category.toLowerCase().includes("backend")
+  );
+  const otherCategories = data.skillCategories.filter(
+    (cat) =>
+      !cat.category.toLowerCase().includes("frontend") &&
+      !cat.category.toLowerCase().includes("backend")
+  );
+
   return (
-    <section className="relative">
+    <section
+      className="relative"
+      style={{
+        backgroundColor: data.sectionStyles?.backgroundColor,
+        color: data.sectionStyles?.textColor,
+      }}
+    >
       {renderBackgroundPattern()}
       <div
         className={SKILL_STYLES.SECTION}
@@ -109,14 +152,28 @@ const SkillsSection = () => {
       >
         <div className="flex flex-col skills-wrapper">
           {renderSectionTitle()}
-          <div className="mt-10">
-            {renderSkillColumn("FRONTEND DEVELOPMENT", SKILLS.frontend)}
-          </div>
-          <div className="flex flex-wrap mt-10">
-            <div className="mr-6 mb-6">
-              {renderSkillColumn("BACKEND DEVELOPMENT", SKILLS.backend)}
+          {frontendCategory && (
+            <div className="mt-10">
+              {renderSkillColumn(
+                frontendCategory.category,
+                frontendCategory.skills
+              )}
             </div>
-            <div>{renderSkillColumn("Other Skills", SKILLS.other)}</div>
+          )}
+          <div className="flex flex-wrap mt-10">
+            {backendCategory && (
+              <div className="mr-6 mb-6">
+                {renderSkillColumn(
+                  backendCategory.category,
+                  backendCategory.skills
+                )}
+              </div>
+            )}
+            {otherCategories.map((category, index) => (
+              <div key={category.category}>
+                {renderSkillColumn(category.category, category.skills)}
+              </div>
+            ))}
           </div>
         </div>
       </div>
