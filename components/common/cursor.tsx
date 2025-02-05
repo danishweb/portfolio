@@ -67,7 +67,6 @@ const Cursor = () => {
   };
 
   useEffect(() => {
-    console.log(isDesktop && !isSmallScreen());
     if (isDesktop && !isSmallScreen()) {
       initCursorAnimation();
     }

@@ -5,10 +5,12 @@ import Footer from "@/components/home/footer";
 import HeroSection from "@/components/home/hero-section";
 import ProjectsSection from "@/components/home/projects";
 import SkillsSection from "@/components/home/skills";
-import { getAllSections } from "../sanity/lib/actions";
+import { getAllSectionsWithRevalidate } from "../sanity/lib/actions";
+
+export const revalidate = 10; // revalidate this page every 10 seconds
 
 export default async function Home() {
-  const data = await getAllSections();
+  const data = await getAllSectionsWithRevalidate(10);
 
   const renderBackdrop = (): React.ReactNode => (
     <div className="fixed top-0 left-0 h-screen w-screen bg-[#f1f1f1] -z-50" />

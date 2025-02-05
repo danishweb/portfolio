@@ -10,7 +10,6 @@ interface FooterProps {
 }
 
 const Footer = ({ data }: FooterProps) => {
-  console.log(data)
   const getButtonType = (type: CTAButton["type"]): ButtonTypes => {
     switch (type) {
       case "PRIMARY":
