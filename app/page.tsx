@@ -5,6 +5,7 @@ import Footer from "@/components/home/footer";
 import HeroSection from "@/components/home/hero-section";
 import ProjectsSection from "@/components/home/projects";
 import SkillsSection from "@/components/home/skills";
+import React from "react";
 import { getAllSectionsWithRevalidate } from "../sanity/lib/actions";
 
 export const revalidate = 10; // revalidate this page every 10 seconds
@@ -19,7 +20,7 @@ export default async function Home() {
   return (
     <div>
       <ProgressIndicator />
-      <Cursor />
+      <Cursor /> 
       <main className="flex-col flex">
         {renderBackdrop()}
         <HeroSection data={data.hero} />
