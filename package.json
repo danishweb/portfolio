@@ -15,7 +15,7 @@
     "@sanity/structure": "^2.36.2",
     "@sanity/vision": "^3.71.2",
     "gsap": "^3.12.5",
-    "next": "14.2.1",
+    "next": "14.2.35",
     "next-sanity": "^9.8.42",
     "next-sanity-image": "^6.1.1",
     "react": "^18",
