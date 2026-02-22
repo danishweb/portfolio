@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { MutableRefObject, useEffect, useRef } from "react";
 import VanillaTilt from "vanilla-tilt";
 import styles from "./project-tile.module.css";
-import { urlForImage } from "@/sanity/lib/image";
+import { urlForImage } from "@/cms/lib/image";
 
 interface ProjectTileProps {
   project: Project;

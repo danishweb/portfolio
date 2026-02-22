@@ -6,7 +6,7 @@ const DEBOUNCE_TIME = 100;
 
 const useIsDesktop = () => {
   const [isDesktop, setIsDesktop] = useState(true);
-  const timer = useRef<NodeJS.Timeout>();
+  const timer = useRef<NodeJS.Timeout>(undefined);
 
   const debouncedDimensionCalculator = useCallback(() => {
     clearTimeout(timer.current);

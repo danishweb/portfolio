@@ -6,7 +6,7 @@ import React, { MutableRefObject, useEffect, useRef } from "react";
 import { MENULINKS } from "../../constants";
 import Button, { ButtonTypes } from "../common/button";
 import { HeroSection as HeroSectionType } from "@/types/index";
-import { urlForImage } from "@/sanity/lib/image";
+import { urlForImage } from "@/cms/lib/image";
 
 const HERO_STYLES = {
   SECTION:

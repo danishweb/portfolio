@@ -6,7 +6,7 @@ import HeroSection from "@/components/home/hero-section";
 import ProjectsSection from "@/components/home/projects";
 import SkillsSection from "@/components/home/skills";
 import React from "react";
-import { getAllSectionsWithRevalidate } from "../sanity/lib/actions";
+import { getAllSectionsWithRevalidate } from "../cms/lib/actions";
 
 export const revalidate = 10; // revalidate this page every 10 seconds
 

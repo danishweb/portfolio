@@ -1,6 +1,6 @@
 "use client";
 
-import { urlForImage } from "@/sanity/lib/image";
+import { urlForImage } from "@/cms/lib/image";
 import { SkillsSection as SkillsSectionT, TechStack } from "@/types";
 import { gsap, Linear } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
