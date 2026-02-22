@@ -15,6 +15,7 @@ const Template = ({ children }: TemplateProps) => {
   const bannerFour = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   const playAnimation = () => {
     const banners = [
@@ -62,29 +63,34 @@ const Template = ({ children }: TemplateProps) => {
   };
 
   useEffect(() => {
+    if (!isHomePage) return;
     const ctx = playAnimation();
     return () => ctx.revert();
-  }, [pathname]);
+  }, [pathname, isHomePage]);
 
   return (
     <div className="relative">
       {/* Banner animations */}
-      <div
-        ref={bannerOne}
-        className="w-screen h-1/4 bg-black z-50 fixed top-0 left-0"
-      />
-      <div
-        ref={bannerTwo}
-        className="w-screen h-1/4 bg-black z-50 fixed top-1/4 left-0"
-      />
-      <div
-        ref={bannerThree}
-        className="w-screen h-1/4 bg-black z-50 fixed top-2/4 left-0"
-      />
-      <div
-        ref={bannerFour}
-        className="w-screen h-1/4 bg-black z-50 fixed top-3/4 left-0"
-      />
+      {isHomePage && (
+        <>
+          <div
+            ref={bannerOne}
+            className="w-screen h-1/4 bg-black z-50 fixed top-0 left-0"
+          />
+          <div
+            ref={bannerTwo}
+            className="w-screen h-1/4 bg-black z-50 fixed top-1/4 left-0"
+          />
+          <div
+            ref={bannerThree}
+            className="w-screen h-1/4 bg-black z-50 fixed top-2/4 left-0"
+          />
+          <div
+            ref={bannerFour}
+            className="w-screen h-1/4 bg-black z-50 fixed top-3/4 left-0"
+          />
+        </>
+      )}
       
       {/* Content wrapper */}
       <div ref={contentRef} className="relative">
