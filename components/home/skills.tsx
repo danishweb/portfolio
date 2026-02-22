@@ -24,39 +24,51 @@ const SkillsSection = ({ data }: { data: SkillsSectionT }) => {
 
   const initRevealAnimation = (
     targetSection: MutableRefObject<HTMLDivElement>
-  ): ScrollTrigger | undefined => {
+  ) => {
     if (!targetSection.current) return;
 
-    const revealTl = gsap.timeline({ defaults: { ease: Linear.easeNone } });
-    const sequenceElements = targetSection.current.querySelectorAll(".seq");
-
-    if (!sequenceElements.length) return;
-
-    revealTl.from(
-      sequenceElements,
-      { opacity: 1, duration: 0.5, stagger: 0.5 },
-      "<"
-    );
-
-    const skillsWrapper =
-      targetSection.current.querySelector(".skills-wrapper");
+    const mm = gsap.matchMedia();
+    const skillsWrapper = targetSection.current.querySelector(".skills-wrapper");
+    
     if (!skillsWrapper) return;
 
-    return ScrollTrigger.create({
-      trigger: skillsWrapper,
-      start: "100px bottom",
-      end: `center center`,
-      animation: revealTl,
-      scrub: 0,
-      onToggle: (self) => setwillChange(self.isActive),
+    mm.add("(min-width: 320px)", () => {
+      const revealTl = gsap.timeline();
+      const sequenceElements = targetSection.current.querySelectorAll(".seq");
+
+      if (sequenceElements.length) {
+        revealTl.from(
+          sequenceElements,
+          { opacity: 0, y: 30, duration: 0.5, stagger: 0.1, ease: "power2.out" }
+        );
+      }
+
+      const skillIcons = targetSection.current.querySelectorAll(".skill");
+      if (skillIcons.length) {
+        revealTl.from(
+          skillIcons,
+          { opacity: 0, scale: 0, duration: 0.6, stagger: 0.05, ease: "back.out(1.7)" },
+          "-=0.4"
+        );
+      }
+
+      ScrollTrigger.create({
+        trigger: skillsWrapper,
+        start: "top 80%",
+        end: "bottom center",
+        animation: revealTl,
+        onToggle: (self) => setwillChange(self.isActive),
+      });
     });
+
+    return mm;
   };
 
   useEffect(() => {
-    const revealAnimationRef = initRevealAnimation(targetSection);
+    const mm = initRevealAnimation(targetSection);
 
     return () => {
-      revealAnimationRef?.kill();
+      mm?.revert();
     };
   }, [targetSection]);
 

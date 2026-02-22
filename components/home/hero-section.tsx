@@ -26,29 +26,51 @@ const HeroSection = React.memo(({ data }: HeroSectionProps) => {
   const targetSection: MutableRefObject<HTMLDivElement> = useRef(null);
   const scrambledText: MutableRefObject<HTMLHeadingElement> = useRef(null);
 
+  const profileRef: MutableRefObject<HTMLDivElement> = useRef(null);
+
   const initRevealAnimation = (
     targetSection: MutableRefObject<HTMLDivElement>
-  ): GSAPTimeline => {
-    const revealTl = gsap.timeline({ defaults: { ease: Linear.easeNone } });
-    revealTl
-      .from(
-        targetSection.current,
-        { opacity: 0, duration: 0.5, stagger: 0.5 },
-        "<"
-      )
-      .to(targetSection.current, { opacity: 1, duration: 2 });
+  ) => {
+    const mm = gsap.matchMedia();
 
-    return revealTl;
+    mm.add("(min-width: 320px)", () => {
+      // Make section fully visible initially, elements themselves will be animated
+      gsap.set(targetSection.current, { opacity: 1 });
+
+      const tl = gsap.timeline();
+      tl.fromTo(
+        targetSection.current.querySelectorAll(".hero-elem"),
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "expo.out" }
+      );
+
+      if (profileRef.current) {
+        gsap.to(profileRef.current, {
+          y: -15,
+          duration: 2,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          delay: 0.5,
+        });
+      }
+    });
+
+    return mm;
   };
 
   useEffect(() => {
-    initRevealAnimation(targetSection);
+    const mm = initRevealAnimation(targetSection);
+    return () => mm.revert();
   }, [targetSection]);
 
   const renderHeroContent = (): React.ReactNode => (
     <div className={HERO_STYLES.CONTENT}>
       <div className="mb-5 lg:mb-10 flex items-center justify-center flex-col gap-5">
-        <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-blue-100 overflow-hidden relative">
+        <div 
+          className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-blue-100 overflow-hidden relative hero-elem"
+          ref={profileRef}
+        >
           {data.profileImage && (
             <Image
               src={urlForImage(data.profileImage)}
@@ -60,11 +82,11 @@ const HeroSection = React.memo(({ data }: HeroSectionProps) => {
             />
           )}
         </div>
-        <h2 className="seq text-2xl">{data.greeting}</h2>
+        <h2 className="seq text-2xl hero-elem">{data.greeting}</h2>
       </div>
 
       <h1
-        className="text-4xl md:text-5xl lg:text-6xl md:max-w-[60%] text-center mb-5 lg:mb-10 font-medium"
+        className="text-4xl md:text-5xl lg:text-6xl md:max-w-[60%] text-center mb-5 lg:mb-10 font-medium hero-elem"
         ref={scrambledText}
       >
         <span className="underline-custom">
@@ -73,7 +95,7 @@ const HeroSection = React.memo(({ data }: HeroSectionProps) => {
         {data.mainHeading.remainingText}
       </h1>
 
-      <div className="mb-5 lg:mb-10 text-center">
+      <div className="mb-5 lg:mb-10 text-center hero-elem">
         <p>
           A <strong>{data.introduction.role}</strong> in{" "}
           {data.introduction.company}.
@@ -82,7 +104,7 @@ const HeroSection = React.memo(({ data }: HeroSectionProps) => {
         <p>{data.introduction.tagline}</p>
       </div>
 
-      <div className="flex seq">
+      <div className="flex seq hero-elem">
         {data.ctaButtons?.map((button, index) => (
           <Button
             key={button.text}

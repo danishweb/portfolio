@@ -27,13 +27,14 @@ const AboutSection = ({ data }: AboutSectionProps) => {
       if (index > 0) {
         timeline.to(quoteRef.current.querySelector(`.about-${index}`), {
           opacity: 0.2,
+          filter: "blur(0px)",
           delay: quote.delay,
         });
       }
       timeline.fromTo(
         quoteRef.current.querySelector(`.about-${index + 1}`),
-        { opacity: 0.2 },
-        { opacity: 1 },
+        { opacity: 0.2, filter: "blur(10px)" },
+        { opacity: 1, filter: "blur(0px)" },
         index === 0 ? ">" : "<"
       );
     });

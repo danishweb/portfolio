@@ -85,6 +85,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
   useEffect(() => {
     let projectsScrollTrigger: ScrollTrigger | undefined;
     let projectsTimeline: GSAPTimeline | undefined;
+    let cardScrollTriggers: ScrollTrigger[] = [];
 
     const { matches } = window.matchMedia(
       "(prefers-reduced-motion: no-preference)"
@@ -97,6 +98,21 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
         targetSectionRef,
         sectionTitleElementRef
       );
+
+      // Parallax for Desktop containerAnimation
+      const projectTiles = targetSectionRef.current.querySelectorAll(".project-wrapper .link");
+      projectTiles.forEach((tile) => {
+        const st = ScrollTrigger.create({
+          trigger: tile,
+          containerAnimation: projectsTimeline,
+          start: "left right",
+          end: "center center",
+          scrub: true,
+          animation: gsap.fromTo(tile, { scale: 0.8, opacity: 0.4 }, { scale: 1, opacity: 1, ease: "power2.out" })
+        });
+        cardScrollTriggers.push(st);
+      });
+
     } else {
       const projectWrapper = targetSectionRef.current.querySelector(
         ".project-wrapper"
@@ -113,6 +129,21 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
         "transform",
         `translateX(-${parentPadding})`
       );
+
+      // Tactile scroll effects for Native Mobile Scroll
+      const projectTiles = projectWrapper.querySelectorAll(".link");
+      projectTiles.forEach((tile) => {
+        const st = ScrollTrigger.create({
+          trigger: tile,
+          scroller: projectWrapper,
+          horizontal: true,
+          start: "left right",
+          end: "center center",
+          scrub: true,
+          animation: gsap.fromTo(tile, { scale: 0.85, opacity: 0.5 }, { scale: 1, opacity: 1, ease: "power2.out" })
+        });
+        cardScrollTriggers.push(st);
+      });
     }
 
     const [revealTimeline, revealScrollTrigger] =
@@ -123,6 +154,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
       projectsTimeline && projectsTimeline.kill();
       revealScrollTrigger && revealScrollTrigger.kill();
       revealTimeline && revealTimeline.progress(1);
+      cardScrollTriggers.forEach((st) => st.kill());
     };
   }, [targetSectionRef, sectionTitleElementRef, isDesktop]);
 
