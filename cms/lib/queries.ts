@@ -97,6 +97,7 @@ export const skillsSectionQuery = groq`
 export const footerSectionQuery = groq`
 *[_type == "footerSection"][0] {
   _type,
+  headline,
   copyright,
   socialLinks[] {
     platform,
@@ -113,6 +114,57 @@ export const footerSectionQuery = groq`
     url,
     type,
     newTab
+  },
+  sectionStyles {
+    backgroundColor,
+    textColor
+  }
+}`;
+
+export const siteSettingsQuery = groq`
+*[_type == "siteSettings"][0] {
+  _type,
+  "resumeUrl": resumeFile.asset->url,
+  theme {
+    primaryColor,
+    secondaryColor,
+    accentColor,
+    backgroundColor,
+    textColor,
+    mutedTextColor
+  },
+  decorativeAssets {
+    "underlineImage": {
+      "asset": {
+        "url": underlineImage.asset->url
+      }
+    },
+    "patternLeftImage": {
+      "asset": {
+        "url": patternLeftImage.asset->url
+      }
+    },
+    "patternRightImage": {
+      "asset": {
+        "url": patternRightImage.asset->url
+      }
+    },
+    "projectTileBackground": {
+      "asset": {
+        "url": projectTileBackground.asset->url
+      }
+    }
+  },
+  buttonTheme {
+    primaryBg,
+    primaryText,
+    primaryHoverBg,
+    outlineBorder,
+    outlineText,
+    outlineHoverBg,
+    outlineHoverText,
+    whiteBg,
+    whiteText
   }
 }`;
 
@@ -205,6 +257,7 @@ export const allSectionsQuery = groq`{
   },
   "footer": *[_type == "footerSection"][0] {
     _type,
+    headline,
     copyright,
     socialLinks[] {
       platform,
@@ -216,11 +269,16 @@ export const allSectionsQuery = groq`{
       }
     },
     contactEmail,
+    "resumeFileUrl": resumeFile.asset->url,
     ctaButtons[] {
       text,
       url,
       type,
       newTab
+    },
+    sectionStyles {
+      backgroundColor,
+      textColor
     }
   }
 }`;

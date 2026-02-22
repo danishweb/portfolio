@@ -2,11 +2,12 @@
 
 import { urlForImage } from "@/cms/lib/image";
 import { SkillsSection as SkillsSectionT, TechStack } from "@/types";
-import { gsap, Linear } from "gsap";
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MENULINKS } from "../../constants";
+import { useTheme } from "@/app/providers/theme-provider";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -19,11 +20,17 @@ const SKILL_STYLES = {
 };
 
 const SkillsSection = ({ data }: { data: SkillsSectionT }) => {
-  const targetSection: MutableRefObject<HTMLDivElement> = useRef(null);
+  const targetSection = useRef<HTMLDivElement>(null);
   const [willChange, setwillChange] = useState(false);
+  const { settings } = useTheme();
+
+  const patternRightUrl =
+    settings?.decorativeAssets?.patternRightImage?.asset?.url || "/pattern-r.svg";
+  const patternLeftUrl =
+    settings?.decorativeAssets?.patternLeftImage?.asset?.url || "/pattern-l.svg";
 
   const initRevealAnimation = (
-    targetSection: MutableRefObject<HTMLDivElement>
+    targetSection: React.RefObject<HTMLDivElement | null>
   ) => {
     if (!targetSection.current) return;
 
@@ -74,7 +81,7 @@ const SkillsSection = ({ data }: { data: SkillsSectionT }) => {
 
   const renderSectionTitle = (): React.ReactNode => (
     <div className="flex flex-col">
-      <p className="section-title-sm seq">SKILLS</p>
+      <p className="section-title-sm seq">{data.subtitle || "SKILLS"}</p>
       <h1 className="section-heading seq mt-2">{data.title}</h1>
       <h2 className="text-2xl md:max-w-2xl w-full seq mt-2">
         {data.description}
@@ -86,7 +93,7 @@ const SkillsSection = ({ data }: { data: SkillsSectionT }) => {
     <>
       <div className="absolute right-0 -bottom-1/3 w-1/5 max-w-xs md:flex hidden justify-end">
         <Image
-          src="/pattern-r.svg"
+          src={patternRightUrl}
           loading="lazy"
           height={700}
           width={320}
@@ -95,7 +102,7 @@ const SkillsSection = ({ data }: { data: SkillsSectionT }) => {
       </div>
       <div className="absolute left-0 -bottom-3.5 w-1/12 max-w-xs md:block hidden">
         <Image
-          src="/pattern-l.svg"
+          src={patternLeftUrl}
           loading="lazy"
           height={335}
           width={140}

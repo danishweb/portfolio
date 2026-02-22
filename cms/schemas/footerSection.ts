@@ -6,6 +6,14 @@ export const footerSection = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'headline',
+      title: 'Headline',
+      type: 'string',
+      description: 'Main headline text (e.g., "Connect with me on social media.")',
+      initialValue: 'Connect with me on social media.',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'copyright',
       title: 'Copyright Text',
       type: 'string',
@@ -94,6 +102,27 @@ export const footerSection = defineType({
         },
       ],
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'sectionStyles',
+      title: 'Section Styles',
+      type: 'object',
+      fields: [
+        {
+          name: 'backgroundColor',
+          title: 'Background Color',
+          type: 'string',
+          description: 'Use valid CSS color value (e.g., #000000)',
+          initialValue: '#000000',
+        },
+        {
+          name: 'textColor',
+          title: 'Text Color',
+          type: 'string',
+          description: 'Use valid CSS color value',
+          initialValue: '#ffffff',
+        },
+      ],
     }),
   ],
 })

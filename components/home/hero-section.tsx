@@ -1,12 +1,13 @@
 "use client";
 
-import { Linear, gsap } from "gsap";
+import { gsap } from "gsap";
 import Image from "next/image";
 import React, { MutableRefObject, useEffect, useRef } from "react";
 import { MENULINKS } from "../../constants";
 import Button, { ButtonTypes } from "../common/button";
 import { HeroSection as HeroSectionType } from "@/types/index";
 import { urlForImage } from "@/cms/lib/image";
+import { useTheme } from "@/app/providers/theme-provider";
 
 const HERO_STYLES = {
   SECTION:
@@ -23,6 +24,9 @@ interface HeroSectionProps {
 }
 
 const HeroSection = React.memo(({ data }: HeroSectionProps) => {
+  const { settings } = useTheme();
+  const resumeUrl = settings?.resumeUrl;
+
   const targetSection: MutableRefObject<HTMLDivElement> = useRef(null);
   const scrambledText: MutableRefObject<HTMLHeadingElement> = useRef(null);
 
@@ -104,11 +108,23 @@ const HeroSection = React.memo(({ data }: HeroSectionProps) => {
         <p>{data.introduction.tagline}</p>
       </div>
 
-      <div className="flex seq hero-elem">
-        {data.ctaButtons?.map((button, index) => (
+      <div className="flex flex-wrap justify-center gap-3 seq hero-elem">
+        {resumeUrl && (
+          <Button
+            classes="uppercase"
+            type={ButtonTypes.PRIMARY}
+            name="Resume"
+            href={`${resumeUrl}?dl=`}
+            otherProps={{
+              target: "_blank",
+              rel: "noreferrer",
+            }}
+          />
+        )}
+        {data.ctaButtons?.map((button) => (
           <Button
             key={button.text}
-            classes={`${index === 0 ? "mr-3" : "ml-3"} uppercase`}
+            classes="uppercase"
             type={
               button.type === "PRIMARY"
                 ? ButtonTypes.PRIMARY

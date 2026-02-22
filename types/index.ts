@@ -1,4 +1,4 @@
-import { Image, PortableTextBlock } from "sanity";
+import { Image } from "sanity";
 
 // Hero Section Types
 export interface HeroSection {
@@ -34,6 +34,7 @@ export interface Quote {
 
 export interface AboutSection {
   _type: "aboutSection";
+  title: string;
   quotes: Quote[];
   sectionStyles?: {
     backgroundColor: string;
@@ -108,10 +109,62 @@ export interface CTAButton {
 
 export interface FooterSection {
   _type: "footerSection";
+  headline: string;
   copyright: string;
   socialLinks: SocialLink[];
   contactEmail?: string;
   ctaButtons: CTAButton[];
+  sectionStyles?: {
+    backgroundColor: string;
+    textColor: string;
+  };
+}
+
+// Site Settings Types
+export interface SiteSettings {
+  _type: "siteSettings";
+  resumeUrl?: string;
+  theme: {
+    primaryColor: string;
+    secondaryColor: string;
+    accentColor: string;
+    backgroundColor: string;
+    textColor: string;
+    mutedTextColor: string;
+  };
+  decorativeAssets: {
+    underlineImage?: {
+      asset: {
+        url: string;
+      };
+    };
+    patternLeftImage?: {
+      asset: {
+        url: string;
+      };
+    };
+    patternRightImage?: {
+      asset: {
+        url: string;
+      };
+    };
+    projectTileBackground?: {
+      asset: {
+        url: string;
+      };
+    };
+  };
+  buttonTheme: {
+    primaryBg: string;
+    primaryText: string;
+    primaryHoverBg: string;
+    outlineBorder: string;
+    outlineText: string;
+    outlineHoverBg: string;
+    outlineHoverText: string;
+    whiteBg: string;
+    whiteText: string;
+  };
 }
 
 // Combined Platform Data Type

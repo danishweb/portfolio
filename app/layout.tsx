@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import React from "react";
 import { METADATA } from "../constants";
+import { getSiteSettingsWithRevalidate } from "../cms/lib/actions";
+import { ThemeProvider } from "./providers/theme-provider";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -11,14 +13,18 @@ const poppins = Poppins({
 
 export const metadata: Metadata = METADATA;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteSettings = await getSiteSettingsWithRevalidate(60);
+
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <ThemeProvider settings={siteSettings}>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

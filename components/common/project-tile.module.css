@@ -1,7 +1,7 @@
 .ProjectTile {
   height: 22rem;
   width: 38rem;
-  background: black;
+  background: var(--color-primary);
   transform-style: preserve-3d;
   transform: perspective(1000px);
 }

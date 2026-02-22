@@ -4,12 +4,16 @@ import Image from "next/image";
 import { MENULINKS } from "../../constants";
 import Button, { ButtonTypes } from "../common/button";
 import { CTAButton, FooterSection } from "@/types";
+import { useTheme } from "@/app/providers/theme-provider";
 
 interface FooterProps {
   data: FooterSection;
 }
 
 const Footer = ({ data }: FooterProps) => {
+  const { settings } = useTheme();
+  const resumeUrl = settings?.resumeUrl;
+
   const getButtonType = (type: CTAButton["type"]): ButtonTypes => {
     switch (type) {
       case "PRIMARY":
@@ -24,6 +28,8 @@ const Footer = ({ data }: FooterProps) => {
   };
 
   const renderSocialIcons = (): React.ReactNode => {
+    if (!data.socialLinks?.length) return null;
+    
     return data.socialLinks.map((social) => (
       <a
         href={social.url}
@@ -33,10 +39,11 @@ const Footer = ({ data }: FooterProps) => {
         target="_blank"
       >
         <Image
-          src={social.icon.asset.url}
+          src={social.icon?.asset?.url || ""}
           alt={social.platform}
           width={40}
           height={40}
+          className="invert"
         />
       </a>
     ));
@@ -44,10 +51,21 @@ const Footer = ({ data }: FooterProps) => {
 
   const renderButtons = (): React.ReactNode => (
     <div className="flex flex-wrap justify-center mt-8 gap-6">
-      {data.ctaButtons.map((button) => (
+      {resumeUrl && (
+        <Button
+          type={ButtonTypes.WHITE}
+          name="Resume"
+          href={`${resumeUrl}?dl=`}
+          otherProps={{
+            target: "_blank",
+            rel: "noreferrer",
+          }}
+        />
+      )}
+      {data.ctaButtons?.map((button) => (
         <Button
           key={button.text}
-          type={getButtonType(button.type)}
+          type={ButtonTypes.WHITE}
           name={button.text}
           otherProps={{
             target: button.newTab ? "_blank" : undefined,
@@ -73,7 +91,7 @@ const Footer = ({ data }: FooterProps) => {
   const renderFooterContent = (): React.ReactNode => (
     <>
       <h1 className="font-medium text-3xl md:text-4xl text-center">
-        Connect with me on social media.
+        {data.headline || "Connect with me on social media."}
       </h1>
       <div className="flex justify-center mt-8">{renderSocialIcons()}</div>
       {renderButtons()}
@@ -85,8 +103,12 @@ const Footer = ({ data }: FooterProps) => {
 
   return (
     <footer
-      className="w-full relative select-none bg-gray pt-12 pb-6 px-6"
+      className="w-full relative select-none pt-12 pb-6 px-6"
       id={MENULINKS[4].ref}
+      style={{
+        backgroundColor: data.sectionStyles?.backgroundColor || "var(--color-primary)",
+        color: data.sectionStyles?.textColor || "#ffffff",
+      }}
     >
       <div className="section-container flex flex-col justify-center">
         {renderFooterContent()}

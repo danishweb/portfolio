@@ -2,10 +2,11 @@
 
 import { Project } from "@/types";
 import Image from "next/image";
-import React, { MutableRefObject, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import VanillaTilt from "vanilla-tilt";
 import styles from "./project-tile.module.css";
 import { urlForImage } from "@/cms/lib/image";
+import { useTheme } from "@/app/providers/theme-provider";
 
 interface ProjectTileProps {
   project: Project;
@@ -13,9 +14,16 @@ interface ProjectTileProps {
 }
 
 const ProjectTile = ({ project, animationEnabled }: ProjectTileProps) => {
-  const projectCard: MutableRefObject<HTMLDivElement> = useRef(null);
+  const projectCard = useRef<HTMLDivElement>(null);
+  const { settings } = useTheme();
   const { name, tech, image, description, gradient } = project;
-  const [stop1, stop2] = gradient || ["#000000", "#000000"];
+  const [stop1, stop2] = gradient || [
+    "var(--color-primary)",
+    "var(--color-primary)",
+  ];
+  const projectBgUrl =
+    settings?.decorativeAssets?.projectTileBackground?.asset?.url ||
+    "/project-bg.svg";
 
   useEffect(() => {
     if (projectCard.current) {
@@ -117,7 +125,7 @@ const ProjectTile = ({ project, animationEnabled }: ProjectTileProps) => {
         }}
       >
         <Image
-          src="/project-bg.svg"
+          src={projectBgUrl}
           alt="Project"
           fill
           className="absolute w-full h-full top-0 left-0 opacity-20"

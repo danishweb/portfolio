@@ -9,6 +9,7 @@ import { projectsSection } from "./projectsSection";
 import { skillsSection } from "./skillsSection";
 import { footerSection } from "./footerSection";
 import { techStack } from "./techStack";
+import { siteSettings } from "./siteSettings";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -22,5 +23,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     skillsSection,
     footerSection,
     techStack,
+    siteSettings,
   ],
 };

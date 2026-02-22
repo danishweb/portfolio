@@ -1,21 +1,26 @@
 .primary {
-  @apply text-white bg-black;
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
 }
 .primary:hover {
-  background-color: rgba(0, 0, 0, 0.69);
+  background-color: var(--btn-primary-hover-bg);
 }
 
 .outline {
-  @apply border-black border-2;
+  border: 2px solid var(--btn-outline-border);
+  color: var(--btn-outline-text);
 }
 .outline:hover {
-  @apply text-white opacity-90 border-[rgba(0,0,0,0.69)];
-  background-color: rgba(0, 0, 0, 0.69);
+  background-color: var(--btn-outline-hover-bg);
+  color: var(--btn-outline-hover-text);
+  opacity: 0.9;
+  border-color: var(--btn-outline-hover-bg);
 }
 
 .white {
-  @apply bg-white text-gray-900;
+  background-color: var(--btn-white-bg);
+  color: var(--btn-white-text);
 }
 .white:hover {
-  @apply opacity-90;
+  opacity: 0.9;
 }

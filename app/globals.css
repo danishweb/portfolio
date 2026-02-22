@@ -3,17 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+  /* Default fallback colors - will be overridden by ThemeProvider */
+  --color-primary: #000000;
+  --color-secondary: #333333;
+  --color-accent: #0066ff;
+  --color-background: #f1f1f1;
+  --color-text: #000000;
+  --color-text-muted: #666666;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  /* Button defaults */
+  --btn-primary-bg: #000000;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover-bg: #333333;
+  --btn-outline-border: #000000;
+  --btn-outline-text: #000000;
+  --btn-outline-hover-bg: rgba(0, 0, 0, 0.69);
+  --btn-outline-hover-text: #ffffff;
+  --btn-white-bg: #ffffff;
+  --btn-white-text: #111827;
+
+  /* Decorative asset defaults */
+  --underline-image: url("/underline.svg");
+  --pattern-left-image: url("/pattern-l.svg");
+  --pattern-right-image: url("/pattern-r.svg");
+  --project-tile-bg: url("/project-bg.svg");
 }
 
 body {
@@ -37,7 +50,7 @@ body {
   right: -0.5rem;
   height: 0.75rem;
   z-index: -1;
-  background-image: url("../public/underline.svg");
+  background-image: var(--underline-image);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -46,9 +59,11 @@ body {
   @apply 2xl:container xl:px-20 md:px-12 px-4 mx-auto;
 }
 .section-heading {
-  @apply md:text-5xl text-4xl font-medium text-black w-fit;
+  @apply md:text-5xl text-4xl font-medium w-fit;
+  color: var(--color-text);
 }
 
 .section-title-sm {
-  @apply uppercase tracking-widest text-black text-sm;
+  @apply uppercase tracking-widest text-sm;
+  color: var(--color-text);
 }

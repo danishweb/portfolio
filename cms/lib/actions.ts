@@ -6,6 +6,7 @@ import {
   skillsSectionQuery,
   footerSectionQuery,
   allSectionsQuery,
+  siteSettingsQuery,
 } from "./queries";
 import type {
   HeroSection,
@@ -14,6 +15,7 @@ import type {
   SkillsSection,
   FooterSection,
   PlatformData,
+  SiteSettings,
 } from "@/types/index";
 
 // Individual section fetchers
@@ -47,4 +49,15 @@ export async function getAllSectionsWithRevalidate(
   revalidate: number = 3600
 ): Promise<PlatformData> {
   return await client.fetch(allSectionsQuery, {}, { next: { revalidate } });
+}
+
+// Site Settings
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  return await client.fetch(siteSettingsQuery);
+}
+
+export async function getSiteSettingsWithRevalidate(
+  revalidate: number = 3600
+): Promise<SiteSettings | null> {
+  return await client.fetch(siteSettingsQuery, {}, { next: { revalidate } });
 }

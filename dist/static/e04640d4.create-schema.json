@@ -1,0 +1,1901 @@
+[
+  {
+    "of": [
+      {
+        "marks": {
+          "annotations": [
+            {
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/"
+                              ],
+                              "allowRelative": false,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ],
+                      "level": "error"
+                    }
+                  ],
+                  "name": "href",
+                  "type": "url",
+                  "title": "URL"
+                }
+              ],
+              "name": "link",
+              "type": "object",
+              "title": "URL"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "strong",
+              "title": "Strong"
+            },
+            {
+              "value": "em",
+              "title": "Emphasis"
+            }
+          ]
+        },
+        "lists": [
+          {
+            "value": "bullet",
+            "title": "Bullet"
+          }
+        ],
+        "styles": [
+          {
+            "value": "normal",
+            "title": "Normal"
+          },
+          {
+            "value": "h1",
+            "title": "H1"
+          },
+          {
+            "value": "h2",
+            "title": "H2"
+          },
+          {
+            "value": "h3",
+            "title": "H3"
+          },
+          {
+            "value": "h4",
+            "title": "H4"
+          },
+          {
+            "value": "blockquote",
+            "title": "Quote"
+          }
+        ],
+        "of": [],
+        "type": "block"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative Text"
+          }
+        ],
+        "type": "image"
+      }
+    ],
+    "name": "blockContent",
+    "type": "array"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "rows": 2,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "initialValue": "#9333ea",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^#[0-9A-Fa-f]{6}$/",
+                  "name": "hex color",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error",
+            "message": "Please enter a valid hex color code (e.g., #9333ea)"
+          }
+        ],
+        "description": "Color for the category tag (hex code)",
+        "name": "color",
+        "type": "string",
+        "title": "Category Color"
+      }
+    ],
+    "name": "category",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 200
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "A short summary of the blog post (max 200 characters)",
+        "name": "excerpt",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "author"
+          }
+        ],
+        "name": "author",
+        "type": "reference"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Important for SEO and accessibility",
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative text"
+          }
+        ],
+        "name": "mainImage",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "to": [
+              {
+                "type": "category"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to category"
+          }
+        ],
+        "name": "categories",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "publishedAt",
+        "type": "datetime"
+      },
+      {
+        "initialValue": false,
+        "name": "featured",
+        "type": "boolean",
+        "title": "Featured Post"
+      },
+      {
+        "initialValue": 5,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "readTime",
+        "type": "number",
+        "title": "Read Time (in minutes)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "body",
+        "type": "blockContent"
+      },
+      {
+        "fields": [
+          {
+            "description": "Override the default meta title",
+            "name": "metaTitle",
+            "type": "string"
+          },
+          {
+            "rows": 3,
+            "description": "Override the default meta description",
+            "name": "metaDescription",
+            "type": "text"
+          },
+          {
+            "description": "Add keywords for SEO",
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "keywords",
+            "type": "array"
+          }
+        ],
+        "name": "seo",
+        "type": "object",
+        "title": "SEO Settings"
+      }
+    ],
+    "name": "post",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "bio",
+        "type": "array"
+      }
+    ],
+    "name": "author",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The greeting text (e.g., \"Hi, I'm Danish 🤘\")",
+        "name": "greeting",
+        "type": "string",
+        "title": "Greeting Text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "profileImage",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "fields": [
+          {
+            "description": "Text that will be underlined (e.g., \"Building\")",
+            "name": "highlightedText",
+            "type": "string"
+          },
+          {
+            "description": "Rest of the heading text",
+            "name": "remainingText",
+            "type": "string"
+          }
+        ],
+        "name": "mainHeading",
+        "type": "object"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "fields": [
+          {
+            "description": "Your professional title (e.g., \"Software Developer\")",
+            "name": "role",
+            "type": "string",
+            "title": "Professional Role"
+          },
+          {
+            "description": "Your company name",
+            "name": "company",
+            "type": "string",
+            "title": "Company Name"
+          },
+          {
+            "description": "Your personal tagline",
+            "name": "tagline",
+            "type": "string"
+          }
+        ],
+        "name": "introduction",
+        "type": "object"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 2
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "text",
+                "type": "string",
+                "title": "Button Text"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "url",
+                "type": "url",
+                "title": "Button URL"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Primary",
+                      "value": "PRIMARY"
+                    },
+                    {
+                      "title": "Outline",
+                      "value": "OUTLINE"
+                    }
+                  ]
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "valid",
+                        "constraint": [
+                          "PRIMARY",
+                          "OUTLINE"
+                        ]
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "type",
+                "type": "string",
+                "title": "Button Type"
+              },
+              {
+                "initialValue": true,
+                "name": "newTab",
+                "type": "boolean",
+                "title": "Open in New Tab"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "ctaButtons",
+        "type": "array",
+        "title": "Call to Action Buttons"
+      },
+      {
+        "fields": [
+          {
+            "initialValue": "#f1f1f1",
+            "name": "backgroundColor",
+            "type": "string"
+          },
+          {
+            "initialValue": "#000000",
+            "name": "textColor",
+            "type": "string"
+          }
+        ],
+        "name": "sectionStyles",
+        "type": "object"
+      }
+    ],
+    "name": "heroSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "text",
+                "type": "text",
+                "title": "Quote Text"
+              },
+              {
+                "initialValue": 0.5,
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      },
+                      {
+                        "flag": "min",
+                        "constraint": 0
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "delay",
+                "type": "number",
+                "title": "Animation Delay (in seconds)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "quotes",
+        "type": "array",
+        "title": "Animated Quotes"
+      },
+      {
+        "fields": [
+          {
+            "description": "Use valid CSS color value",
+            "name": "backgroundColor",
+            "type": "string"
+          },
+          {
+            "description": "Use valid CSS color value",
+            "name": "textColor",
+            "type": "string"
+          }
+        ],
+        "name": "sectionStyles",
+        "type": "object"
+      }
+    ],
+    "name": "aboutSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "subtitle",
+        "type": "string",
+        "title": "Section Subtitle"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "description",
+        "type": "text",
+        "title": "Section Description"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "name",
+                "type": "string",
+                "title": "Project Name"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "description",
+                "type": "text",
+                "title": "Project Description"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "image",
+                "type": "image",
+                "title": "Project Image"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      },
+                      {
+                        "flag": "min",
+                        "constraint": 2
+                      },
+                      {
+                        "flag": "max",
+                        "constraint": 2
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "gradient",
+                "type": "array",
+                "title": "Gradient Colors"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "url",
+                "type": "url",
+                "title": "Project URL"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "of": [
+                  {
+                    "to": [
+                      {
+                        "type": "techStack"
+                      }
+                    ],
+                    "type": "reference",
+                    "title": "Reference to tech stack"
+                  }
+                ],
+                "name": "tech",
+                "type": "array",
+                "title": "Technologies Used"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "projects",
+        "type": "array"
+      },
+      {
+        "fields": [
+          {
+            "description": "Use valid CSS color value",
+            "name": "backgroundColor",
+            "type": "string"
+          },
+          {
+            "description": "Use valid CSS color value",
+            "name": "textColor",
+            "type": "string"
+          }
+        ],
+        "name": "sectionStyles",
+        "type": "object"
+      }
+    ],
+    "name": "projectsSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "title": "Section Subtitle"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "description",
+        "type": "text",
+        "title": "Section Description"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "category",
+                "type": "string",
+                "title": "Category Name"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "of": [
+                  {
+                    "to": [
+                      {
+                        "type": "techStack"
+                      }
+                    ],
+                    "type": "reference",
+                    "title": "Reference to tech stack"
+                  }
+                ],
+                "name": "skills",
+                "type": "array"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "skillCategories",
+        "type": "array"
+      },
+      {
+        "fields": [
+          {
+            "description": "Use valid CSS color value",
+            "name": "backgroundColor",
+            "type": "string"
+          },
+          {
+            "description": "Use valid CSS color value",
+            "name": "textColor",
+            "type": "string"
+          }
+        ],
+        "name": "sectionStyles",
+        "type": "object"
+      }
+    ],
+    "name": "skillsSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": "Connect with me on social media.",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Main headline text (e.g., \"Connect with me on social media.\")",
+        "name": "headline",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "copyright",
+        "type": "string",
+        "title": "Copyright Text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "platform",
+                "type": "string",
+                "title": "Platform Name"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "url",
+                "type": "url",
+                "title": "Profile URL"
+              },
+              {
+                "options": {
+                  "accept": "image/svg+xml,image/png,image/jpeg,image/gif,image/webp"
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "icon",
+                "type": "image",
+                "title": "Platform Icon"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "socialLinks",
+        "type": "array"
+      },
+      {
+        "name": "contactEmail",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "text",
+                "type": "string",
+                "title": "Button Text"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "url",
+                "type": "url",
+                "title": "Button URL"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Primary",
+                      "value": "PRIMARY"
+                    },
+                    {
+                      "title": "Outline",
+                      "value": "OUTLINE"
+                    },
+                    {
+                      "title": "White",
+                      "value": "WHITE"
+                    }
+                  ]
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "valid",
+                        "constraint": [
+                          "PRIMARY",
+                          "OUTLINE",
+                          "WHITE"
+                        ]
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "type",
+                "type": "string",
+                "title": "Button Type"
+              },
+              {
+                "initialValue": true,
+                "name": "newTab",
+                "type": "boolean",
+                "title": "Open in New Tab"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "ctaButtons",
+        "type": "array",
+        "title": "Call to Action Buttons"
+      },
+      {
+        "fields": [
+          {
+            "initialValue": "#000000",
+            "description": "Use valid CSS color value (e.g., #000000)",
+            "name": "backgroundColor",
+            "type": "string"
+          },
+          {
+            "initialValue": "#ffffff",
+            "description": "Use valid CSS color value",
+            "name": "textColor",
+            "type": "string"
+          }
+        ],
+        "name": "sectionStyles",
+        "type": "object"
+      }
+    ],
+    "name": "footerSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Technology Name"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Used for icon mapping (e.g., typescript, react, nodejs)",
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "accept": "image/svg+xml"
+        },
+        "description": "SVG icon for the technology",
+        "name": "icon",
+        "type": "image"
+      }
+    ],
+    "name": "techStack",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "initialValue": "#000000",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Main brand color (hex code, e.g., #000000)",
+            "name": "primaryColor",
+            "type": "string"
+          },
+          {
+            "initialValue": "#333333",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Secondary brand color",
+            "name": "secondaryColor",
+            "type": "string"
+          },
+          {
+            "initialValue": "#0066ff",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Accent/highlight color",
+            "name": "accentColor",
+            "type": "string"
+          },
+          {
+            "initialValue": "#f1f1f1",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Default page background color",
+            "name": "backgroundColor",
+            "type": "string"
+          },
+          {
+            "initialValue": "#000000",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Default text color",
+            "name": "textColor",
+            "type": "string"
+          },
+          {
+            "initialValue": "#666666",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Secondary/muted text color",
+            "name": "mutedTextColor",
+            "type": "string"
+          }
+        ],
+        "name": "theme",
+        "type": "object",
+        "title": "Theme Colors"
+      },
+      {
+        "fields": [
+          {
+            "options": {
+              "accept": "image/svg+xml,image/png,image/jpeg,image/gif,image/webp"
+            },
+            "description": "SVG or image used for text underline decoration",
+            "name": "underlineImage",
+            "type": "image",
+            "title": "Underline Decoration"
+          },
+          {
+            "options": {
+              "accept": "image/svg+xml,image/png,image/jpeg,image/gif,image/webp"
+            },
+            "description": "Decorative pattern shown on the left side",
+            "name": "patternLeftImage",
+            "type": "image",
+            "title": "Left Pattern Image"
+          },
+          {
+            "options": {
+              "accept": "image/svg+xml,image/png,image/jpeg,image/gif,image/webp"
+            },
+            "description": "Decorative pattern shown on the right side",
+            "name": "patternRightImage",
+            "type": "image",
+            "title": "Right Pattern Image"
+          },
+          {
+            "options": {
+              "accept": "image/svg+xml,image/png,image/jpeg,image/gif,image/webp"
+            },
+            "description": "Background pattern for project tiles",
+            "name": "projectTileBackground",
+            "type": "image"
+          }
+        ],
+        "name": "decorativeAssets",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "initialValue": "#000000",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "primaryBg",
+            "type": "string",
+            "title": "Primary Button Background"
+          },
+          {
+            "initialValue": "#ffffff",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "primaryText",
+            "type": "string",
+            "title": "Primary Button Text"
+          },
+          {
+            "initialValue": "#333333",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "primaryHoverBg",
+            "type": "string",
+            "title": "Primary Button Hover Background"
+          },
+          {
+            "initialValue": "#000000",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "outlineBorder",
+            "type": "string",
+            "title": "Outline Button Border"
+          },
+          {
+            "initialValue": "#000000",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "outlineText",
+            "type": "string",
+            "title": "Outline Button Text"
+          },
+          {
+            "initialValue": "rgba(0, 0, 0, 0.69)",
+            "name": "outlineHoverBg",
+            "type": "string",
+            "title": "Outline Button Hover Background"
+          },
+          {
+            "initialValue": "#ffffff",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "outlineHoverText",
+            "type": "string",
+            "title": "Outline Button Hover Text"
+          },
+          {
+            "initialValue": "#ffffff",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "whiteBg",
+            "type": "string",
+            "title": "White Button Background"
+          },
+          {
+            "initialValue": "#111827",
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "regex",
+                    "constraint": {
+                      "pattern": "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/",
+                      "name": "hex color",
+                      "invert": false
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "whiteText",
+            "type": "string",
+            "title": "White Button Text"
+          }
+        ],
+        "name": "buttonTheme",
+        "type": "object"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  }
+]

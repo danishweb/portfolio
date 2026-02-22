@@ -2,7 +2,7 @@
 
 import { Linear, gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MENULINKS } from "../../constants";
 import ProjectTile from "../common/project-tile";
 import useIsDesktop from "@/utils/hooks/use-is-desktop";
@@ -20,17 +20,16 @@ interface ProjectsSectionProps {
 }
 
 const ProjectsSection = ({ data }: ProjectsSectionProps) => {
-  console.log(data);
   const isDesktop = useIsDesktop();
-  const targetSectionRef: MutableRefObject<HTMLDivElement> = useRef(null);
-  const sectionTitleElementRef: MutableRefObject<HTMLDivElement> = useRef(null);
+  const targetSectionRef = useRef<HTMLDivElement>(null);
+  const sectionTitleElementRef = useRef<HTMLDivElement>(null);
 
   const [willChange, setWillChange] = useState(false);
   const [horizontalAnimationEnabled, setHorizontalAnimationEnabled] =
     useState(false);
 
   const initRevealAnimation = (
-    targetSectionRef: MutableRefObject<HTMLDivElement>
+    targetSectionRef: React.RefObject<HTMLDivElement | null>
   ): [GSAPTimeline, ScrollTrigger] => {
     const revealTl = gsap.timeline({ defaults: { ease: Linear.easeNone } });
     revealTl.from(
@@ -51,8 +50,8 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
   };
 
   const initProjectsAnimation = (
-    targetSectionRef: MutableRefObject<HTMLDivElement>,
-    sectionTitleElementRef: MutableRefObject<HTMLDivElement>
+    targetSectionRef: React.RefObject<HTMLDivElement | null>,
+    sectionTitleElementRef: React.RefObject<HTMLDivElement | null>
   ): [GSAPTimeline, ScrollTrigger] => {
     const timeline = gsap.timeline({ defaults: { ease: Linear.easeNone } });
     const sidePadding =
@@ -165,7 +164,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
       }`}
       ref={sectionTitleElementRef}
     >
-      <p className="section-title-sm seq">PROJECTS</p>
+      <p className="section-title-sm seq">{data.subtitle || "PROJECTS"}</p>
       <h1 className="section-heading seq mt-2">{data.title}</h1>
       <h2 className="text-2xl md:max-w-3xl w-full seq max-w-sm mt-2">
         {data.description}

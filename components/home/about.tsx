@@ -3,20 +3,20 @@
 import { AboutSection as AboutSectionType } from "@/types";
 import { gsap, Linear } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface AboutSectionProps {
   data: AboutSectionType;
 }
 
 const AboutSection = ({ data }: AboutSectionProps) => {
-  const quoteRef: MutableRefObject<HTMLDivElement> = useRef(null);
-  const targetSection: MutableRefObject<HTMLDivElement> = useRef(null);
+  const quoteRef = useRef<HTMLDivElement>(null);
+  const targetSection = useRef<HTMLDivElement>(null);
   const [willChange, setWillChange] = useState(false);
 
   const initAboutAnimation = (
-    quoteRef: MutableRefObject<HTMLDivElement>,
-    targetSection: MutableRefObject<HTMLDivElement>
+    quoteRef: React.RefObject<HTMLDivElement | null>,
+    targetSection: React.RefObject<HTMLDivElement | null>
   ): ScrollTrigger => {
     const timeline = gsap.timeline({
       defaults: { ease: Linear.easeNone, duration: 0.1 },
@@ -61,7 +61,7 @@ const AboutSection = ({ data }: AboutSectionProps) => {
   }, [quoteRef, targetSection]);
 
   const renderQuotes = (): React.ReactNode => (
-    <h1 ref={quoteRef} className="font-medium text-3xl sm:text-4xl md:text-6xl">
+    <div ref={quoteRef} className="font-medium text-3xl sm:text-4xl md:text-6xl">
       {data.quotes.map((quote, index) => (
         <span
           key={index}
@@ -72,7 +72,7 @@ const AboutSection = ({ data }: AboutSectionProps) => {
           {`${quote.text} `}
         </span>
       ))}
-    </h1>
+    </div>
   );
 
   return (
@@ -84,6 +84,9 @@ const AboutSection = ({ data }: AboutSectionProps) => {
         color: data?.sectionStyles?.textColor,
       }}
     >
+      {data.title && (
+        <h1 className="section-heading mb-8">{data.title}</h1>
+      )}
       {renderQuotes()}
     </section>
   );
